@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Memory Match Game</title>
+  <link rel="stylesheet" href="memory.css">
+</head>
+<body>
+  <div id="gameContainer">
+    <h1>🧠 Memory Match</h1>
+    <div id="scoreBoard">Score: 0</div>
+    <button onclick="startGame()">Restart</button>
+    <div id="gameBoard"></div>
+  </div>
+
+  <script>
+    const cards = [
+      "🍎", "🍎",
+      "🐶", "🐶",
+      "🚗", "🚗",
+      "🎵", "🎵"
+    ];
+
+    let flippedCards = [];
+    let matchedCards = [];
+    let score = 0;
+
+    function startGame() {
+      const board = document.getElementById("gameBoard");
+      board.innerHTML = "";
+      score = 0;
+      matchedCards = [];
+      flippedCards = [];
+      document.getElementById("scoreBoard").innerText = "Score: 0";
+
+      const shuffled = cards.sort(() => 0.5 - Math.random());
+
+      shuffled.forEach((symbol, index) => {
+        const card = document.createElement("div");
+        card.classList.add("card");
+        card.dataset.symbol = symbol;
+        card.dataset.index = index;
+        card.innerText = "";
+        card.onclick = () => flipCard(card);
+        board.appendChild(card);
+      });
+    }
+
+    function flipCard(card) {
+      if (flippedCards.length === 2 || card.classList.contains("matched") || card.innerText !== "") return;
+
+      card.innerText = card.dataset.symbol;
+      flippedCards.push(card);
+
+      if (flippedCards.length === 2) {
+        const [card1, card2] = flippedCards;
+        if (card1.dataset.symbol === card2.dataset.symbol) {
+          card1.classList.add("matched");
+          card2.classList.add("matched");
+          matchedCards.push(card1.dataset.symbol);
+          score++;
+          document.getElementById("scoreBoard").innerText = "Score: " + score;
+          flippedCards = [];
+        } else {
+          setTimeout(() => {
+            card1.innerText = "";
+            card2.innerText = "";
+            flippedCards = [];
+          }, 1000);
+        }
+      }
+    }
+
+    window.onload = startGame;
+  </script>
+</body>
+</html>
