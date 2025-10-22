@@ -57,7 +57,7 @@ function createObstacle() {
   obstacleY > 440 &&
   parseInt(obstacle.style.left) === playerX &&
   parseInt(player.style.bottom) < 40 &&
-  !isInvincible
+  !isFlying
 ) {
   alert("💥 Game Over! Final Score: " + score);
   location.reload();
@@ -72,6 +72,38 @@ function createCoin() {
   coin.classList.add("coin");
   coin.style.left = [0, 180, 360][Math.floor(Math.random() * 3)] + "px";
   gameArea.appendChild(coin);
+
+  let coinY = -30;
+  const fall = setInterval(() => {
+    coinY += 5;
+
+    // Magnet effect: pull coin toward player
+    if (magnetActive) {
+      const coinX = parseInt(coin.style.left);
+      if (coinX < playerX) coin.style.left = (coinX + 5) + "px";
+      else if (coinX > playerX) coin.style.left = (coinX - 5) + "px";
+    }
+
+    coin.style.top = coinY + "px";
+
+    if (coinY > 460) {
+      clearInterval(fall);
+      gameArea.removeChild(coin);
+    }
+
+    if (
+      coinY > 440 &&
+      parseInt(coin.style.left) === playerX &&
+      parseInt(player.style.bottom) < 40
+    ) {
+      clearInterval(fall);
+      gameArea.removeChild(coin);
+      score += 5 * coinMultiplier;
+      scoreDisplay.innerText = "Score: " + score;
+    }
+  }, 30);
+}
+
 
   let coinY = -30;
   const fall = setInterval(() => {
@@ -139,3 +171,84 @@ function activatePowerUp() {
 }
 score += 5 * coinMultiplier;
 setInterval(createPowerUp, 7000); // Every 7 seconds
+
+function createJetpack() {
+  const jetpack = document.createElement("div");
+  jetpack.classList.add("jetpack");
+  jetpack.style.left = [0, 180, 360][Math.floor(Math.random() * 3)] + "px";
+  gameArea.appendChild(jetpack);
+
+  let jetY = -30;
+  const fall = setInterval(() => {
+    jetY += 5;
+    jetpack.style.top = jetY + "px";
+
+    if (jetY > 460) {
+      clearInterval(fall);
+      gameArea.removeChild(jetpack);
+    }
+
+    if (
+      jetY > 440 &&
+      parseInt(jetpack.style.left) === playerX &&
+      parseInt(player.style.bottom) < 40
+    ) {
+      clearInterval(fall);
+      gameArea.removeChild(jetpack);
+      activateJetpack();
+    }
+  }, 30);
+}
+let isFlying = false;
+
+function activateJetpack() {
+  isFlying = true;
+  player.style.bottom = "200px"; // Lift player off the ground
+  gameArea.style.backgroundColor = "#fff3e0"; // Visual cue
+
+  setTimeout(() => {
+    isFlying = false;
+    player.style.bottom = "0px";
+    gameArea.style.backgroundColor = "#e0f7fa";
+  }, 5000); // Jetpack lasts 5 seconds
+}
+setInterval(createJetpack, 10000); // Every 10 seconds
+function createMagnet() {
+  const magnet = document.createElement("div");
+  magnet.classList.add("magnet");
+  magnet.style.left = [0, 180, 360][Math.floor(Math.random() * 3)] + "px";
+  gameArea.appendChild(magnet);
+
+  let magnetY = -30;
+  const fall = setInterval(() => {
+    magnetY += 5;
+    magnet.style.top = magnetY + "px";
+
+    if (magnetY > 460) {
+      clearInterval(fall);
+      gameArea.removeChild(magnet);
+    }
+
+    if (
+      magnetY > 440 &&
+      parseInt(magnet.style.left) === playerX &&
+      parseInt(player.style.bottom) < 40
+    ) {
+      clearInterval(fall);
+      gameArea.removeChild(magnet);
+      activateMagnet();
+    }
+  }, 30);
+}
+let magnetActive = false;
+
+function activateMagnet() {
+  magnetActive = true;
+  gameArea.style.backgroundColor = "#e0ffe0"; // Visual cue
+
+  setTimeout(() => {
+    magnetActive = false;
+    gameArea.style.backgroundColor = "#e0f7fa";
+  }, 5000); // Magnet lasts 5 seconds
+}
+setInterval(createMagnet, 12000); // Every 12 seconds
