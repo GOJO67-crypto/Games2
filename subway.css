@@ -39,3 +39,21 @@ body {
   top: -30px;
   box-shadow: 0 0 5px #999;
 }
+.powerup {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: purple;
+  border-radius: 50%;
+  top: -30px;
+  box-shadow: 0 0 5px #999;
+}
+.jetpack {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background-color: orange;
+  border-radius: 50%;
+  top: -30px;
+  box-shadow: 0 0 5px #999;
+}
