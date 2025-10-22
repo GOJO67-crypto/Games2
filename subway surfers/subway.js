@@ -65,3 +65,4 @@ function createObstacle() {
 }
 
 setInterval(createObstacle, 1500);
+
