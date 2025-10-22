@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YouTube Music Player</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; }
+    #player { margin: 20px auto; }
+    #searchResults div { cursor: pointer; margin: 5px; padding: 5px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+  <h1>🎵 YouTube Music Player</h1>
+  <input id="searchInput" placeholder="Search for a song..." />
+  <button onclick="searchSongs()">Search</button>
+  <div id="searchResults"></div>
+  <div id="player"></div>
+  <button onclick="playVideo()">▶️ Play</button>
+  <button onclick="pauseVideo()">⏸️ Pause</button>
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="youtube-player.js"></script>
+</body>
+</html>
