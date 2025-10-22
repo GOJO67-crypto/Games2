@@ -8,15 +8,16 @@ const io = socketIO(server);
 let rooms = {};
 
 io.on('connection', socket => {
-  socket.on('createRoom', ({ username, isPrivate }) => {
-    const roomId = isPrivate
-      ? 'private-' + Math.random().toString(36).substr(2, 5).toUpperCase()
-      : 'public-' + Math.random().toString(36).substr(2, 5);
-    rooms[roomId] = { players: [username], isPrivate };
-    socket.join(roomId);
-    socket.emit('roomCreated', { roomId }socket.on("chatMessage", ({ roomId, message, username }) => {
-  io.to(roomId).emit("chatMessage", { username, message });
+socket.on("createRoom", ({ username, isPrivate }) => {
+  const roomId = isPrivate
+    ? "private-" + Math.random().toString(36).substr(2, 5).toUpperCase()
+    : "public-" + Math.random().toString(36).substr(2, 5);
+
+  rooms[roomId] = { players: [username], isPrivate };
+  socket.join(roomId);
+  socket.emit("roomCreated", { roomId });
 });
+
 );
   });
 
