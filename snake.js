@@ -1,89 +1,82 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
+
 const box = 20;
-let snake = [{ x: 9 * box, y: 10 * box }];
+const canvasSize = 20; // 20x20 grid
+let snake = [];
 let direction = "RIGHT";
-let food = { x: 5 * box, y: 5 * box };
+let food = {};
 let score = 0;
-let highScore = localStorage.getItem("highScore") || 0;
-let delay = 100;
-let game;
+let gameInterval;
 
-document.addEventListener("keydown", changeDirection);
-
-function changeDirection(event) {
-  if (event.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
-  else if (event.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
-  else if (event.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
-  else if (event.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+function initGame() {
+  snake = [{ x: 9 * box, y: 10 * box }];
+  direction = "RIGHT";
+  score = 0;
+  placeFood();
+  if (gameInterval) clearInterval(gameInterval);
+  gameInterval = setInterval(draw, 100);
 }
+
+function placeFood() {
+  food = {
+    x: Math.floor(Math.random() * canvasSize) * box,
+    y: Math.floor(Math.random() * canvasSize) * box
+  };
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowLeft" && direction !== "RIGHT") direction = "LEFT";
+  else if (e.key === "ArrowUp" && direction !== "DOWN") direction = "UP";
+  else if (e.key === "ArrowRight" && direction !== "LEFT") direction = "RIGHT";
+  else if (e.key === "ArrowDown" && direction !== "UP") direction = "DOWN";
+});
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // Draw snake
   for (let i = 0; i < snake.length; i++) {
     ctx.fillStyle = i === 0 ? "green" : "lightgreen";
     ctx.fillRect(snake[i].x, snake[i].y, box, box);
   }
 
+  // Draw food
   ctx.fillStyle = "red";
   ctx.fillRect(food.x, food.y, box, box);
 
-  let headX = snake[0].x;
-  let headY = snake[0].y;
+  // Move snake
+  let head = { x: snake[0].x, y: snake[0].y };
+  if (direction === "LEFT") head.x -= box;
+  if (direction === "UP") head.y -= box;
+  if (direction === "RIGHT") head.x += box;
+  if (direction === "DOWN") head.y += box;
 
-  if (direction === "LEFT") headX -= box;
-  if (direction === "UP") headY -= box;
-  if (direction === "RIGHT") headX += box;
-  if (direction === "DOWN") headY += box;
+  // Check collision
+  if (
+    head.x < 0 || head.x >= canvas.width ||
+    head.y < 0 || head.y >= canvas.height ||
+    snake.some(segment => segment.x === head.x && segment.y === head.y)
+  ) {
+    clearInterval(gameInterval);
+    alert("💥 Game Over! Final Score: " + score);
+    return;
+  }
 
-  if (headX === food.x && headY === food.y) {
+  // Eat food
+  if (head.x === food.x && head.y === food.y) {
     score++;
-    document.getElementById("scoreBoard").innerText = "Score: " + score;
-
-    if (score > highScore) {
-      highScore = score;
-      localStorage.setItem("highScore", highScore);
-      document.getElementById("highScoreBoard").innerText = "High Score: " + highScore;
-    }
-
-    food = {
-      x: Math.floor(Math.random() * 19) * box,
-      y: Math.floor(Math.random() * 19) * box
-    };
+    placeFood();
   } else {
     snake.pop();
   }
 
-  const newHead = { x: headX, y: headY };
+  snake.unshift(head);
 
-  if (
-    headX < 0 || headX >= canvas.width ||
-    headY < 0 || headY >= canvas.height ||
-    snake.some(segment => segment.x === newHead.x && segment.y === newHead.y)
-  ) {
-    clearInterval(game);
-    alert("💥 Game Over! Final Score: " + score);
-    location.reload();
-    return;
-  }
-
-  snake.unshift(newHead);
+  // Draw score
+  ctx.fillStyle = "black";
+  ctx.font = "16px Arial";
+  ctx.fillText("Score: " + score, 10, canvas.height - 10);
 }
 
-function startGame() {
-  snake = [{ x: 9 * box, y: 10 * box }];
-  direction = "RIGHT";
-  score = 0;
-  delay = 100;
-  document.getElementById("scoreBoard").innerText = "Score: 0";
-  document.getElementById("highScoreBoard").innerText = "High Score: " + highScore;
-  food = {
-    x: Math.floor(Math.random() * 19) * box,
-    y: Math.floor(Math.random() * 19) * box
-  };
-  clearInterval(game);
-  game = setInterval(draw, delay);
-}
-
-window.onload = startGame;
+window.onload = initGame;
