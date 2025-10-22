@@ -1,0 +1,38 @@
+body {
+  font-family: sans-serif;
+  text-align: center;
+  background-color: #e0f7fa;
+}
+
+#gameArea {
+  position: relative;
+  width: 400px;
+  height: 500px;
+  margin: 20px auto;
+  background-color: #fff;
+  border: 2px solid #333;
+  overflow: hidden;
+}
+
+#player {
+  position: absolute;
+  bottom: 0;
+  left: 180px;
+  width: 40px;
+  height: 40px;
+  background-color: #4CAF50;
+  border-radius: 50%;
+}
+
+.obstacle {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background-color: #f44336;
+  top: -40px;
+}
+
+#score {
+  font-size: 24px;
+  margin-top: 10px;
+}
