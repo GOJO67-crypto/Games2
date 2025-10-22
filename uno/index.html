@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UNO Lobby</title>
+</head>
+<body>
+  <h1>UNO Lobby</h1>
+  <input id="username" placeholder="Enter username" />
+  <button onclick="createRoom(false)">Create Public Room</button>
+  <button onclick="createRoom(true)">Create Private Room</button>
+  <input id="roomCode" placeholder="Enter room code" />
+  <button onclick="joinRoom()">Join Room</button>
+  <div id="status"></div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="socket.js"></script>
+</body>
+</html>
