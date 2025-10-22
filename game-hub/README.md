@@ -12,11 +12,6 @@ Welcome to **Game Hub**, a browser-based collection of mini-games built with HTM
 - 🏆 Leaderboards and score tracking
 - 🎵 Sound effects and countdowns
 
-## 📁 How to Use
-
-1. Clone or download the repository
-2. Open `index.html` in your browser
-3. Click a game to start playing!
 
 ## 🛠️ Technologies
 
