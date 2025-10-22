@@ -5,39 +5,35 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
 
-let lobbies = {}; // { lobbyId: { players: [], isPrivate: true/false } }
+let rooms = {};
 
 io.on('connection', socket => {
-  socket.on('createLobby', ({ username, isPrivate }) => {
-    const lobbyId = isPrivate ? generatePrivateCode() : generatePublicId();
-    lobbies[lobbyId] = { players: [username], isPrivate };
-    socket.join(lobbyId);
-    socket.emit('lobbyCreated', { lobbyId });
+  socket.on('createRoom', ({ username, isPrivate }) => {
+    const roomId = isPrivate
+      ? 'private-' + Math.random().toString(36).substr(2, 5).toUpperCase()
+      : 'public-' + Math.random().toString(36).substr(2, 5);
+    rooms[roomId] = { players: [username], isPrivate };
+    socket.join(roomId);
+    socket.emit('roomCreated', { roomId });
   });
 
-  socket.on('joinLobby', ({ lobbyId, username }) => {
-    if (lobbies[lobbyId]) {
-      lobbies[lobbyId].players.push(username);
-      socket.join(lobbyId);
-      io.to(lobbyId).emit('playerJoined', { username });
+  socket.on('joinRoom', ({ roomId, username }) => {
+    if (rooms[roomId]) {
+      rooms[roomId].players.push(username);
+      socket.join(roomId);
+      io.to(roomId).emit('playerJoined', { username });
     } else {
-      socket.emit('error', 'Lobby not found');
+      socket.emit('error', 'Room not found');
     }
   });
 
-  // Add game logic here...
+  socket.on('playCard', ({ roomId, card, username }) => {
+    io.to(roomId).emit('cardPlayed', { card, username });
+  });
 
   socket.on('disconnect', () => {
-    // Handle player leaving
+    // Optional: handle player leaving
   });
 });
 
-function generatePublicId() {
-  return 'public-' + Math.random().toString(36).substr(2, 5);
-}
-
-function generatePrivateCode() {
-  return 'private-' + Math.random().toString(36).substr(2, 5).toUpperCase();
-}
-
-server.listen(3000, () => console.log('Server running on port 3000'));
+server.listen(3000, () => console.log('UNO server running on port 3000'));
