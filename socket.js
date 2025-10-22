@@ -1,20 +1,23 @@
-const socket = io();
+const socket = io(); // Connect to server
+let username = "";
+let roomId = "";
 
 function createRoom(isPrivate) {
-  const username = document.getElementById("username").value;
-  socket.emit('createRoom', { username, isPrivate });
+  username = document.getElementById("username").value.trim();
+  if (!username) {
+    alert("Please enter a username");
+    return;
+  }
+
+  socket.emit("createRoom", { username, isPrivate });
 }
 
-function joinRoom() {
-  const username = document.getElementById("username").value;
-  const roomId = document.getElementById("roomCode").value;
-  socket.emit('joinRoom', { roomId, username });
-}
-
-socket.on('roomCreated', ({ roomId }) => {
+socket.on("roomCreated", ({ roomId: newRoomId }) => {
+  roomId = newRoomId;
   document.getElementById("status").innerText = "Room created: " + roomId;
-  window.location.href = `uno.html?room=${roomId}`;
+  window.location.href = `uno.html?room=${roomId}&username=${username}`;
 });
+
 
 socket.on('playerJoined', ({ username }) => {
   console.log(username + " joined the room");
