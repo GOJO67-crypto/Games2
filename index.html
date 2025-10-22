@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Hub</title>
+  <link rel="stylesheet" href="menu.css">
+</head>
+<body>
+  <div id="menuContainer">
+    <h1>🎮 Welcome to the Game Hub</h1>
+
+    <input type="text" id="searchInput" placeholder="Search games..." onkeyup="filterGames()" />
+
+    <div class="game-grid">
+      <div class="game-card">
+        <h2>🐍 Snake Game</h2>
+        <p>Eat apples, grow longer, and avoid crashing!</p>
+        <a href="snake.html"><button>Play Snake</button></a>
+      </div>
+
+      <div class="game-card">
+        <h2>🧠 Memory Match</h2>
+        <p>Flip cards and test your memory!</p>
+        <a href="memory.html"><button>Play Memory Match</button></a>
+      </div>
+
+     <div class="game-card">
+  <h2>🃏 UNO Game</h2>
+  <p>Create public or private matches and play with friends!</p>
+  <a href="uno.html"><button>Play UNO</button></a>
+</div>
+
+<div class="game-card">
+  <h2>🚀 Subway Surfers</h2>
+  <p>Dodge obstacles and run as far as you can!</p>
+  <a href="subway.html"><button>Play Subway Surfers</button></a>
+</div>
+    <script>
+  function filterGames() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const cards = document.getElementsByClassName("game-card");
+
+    for (let i = 0; i < cards.length; i++) {
+      const card = cards[i];
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(input) ? "inline-block" : "none";
+    }
+  }
+</script>
+  
