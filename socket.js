@@ -44,3 +44,35 @@ socket.on("chatMessage", ({ username, message }) => {
   chatBox.scrollTop = chatBox.scrollHeight;
 });
 
+function refreshLobby() {
+  socket.emit("getLobbyList");
+}
+
+socket.on("lobbyList", rooms => {
+  const lobbyDiv = document.getElementById("lobbyList");
+  lobbyDiv.innerHTML = "";
+
+  if (rooms.length === 0) {
+    lobbyDiv.innerText = "No public rooms available.";
+    return;
+  }
+
+  rooms.forEach(room => {
+    const roomDiv = document.createElement("div");
+    roomDiv.innerHTML = `
+      <strong>Room:</strong> ${room.roomId} |
+      <strong>Players:</strong> ${room.players}
+      <button onclick="joinRoomFromList('${room.roomId}')">Join</button>
+    `;
+    lobbyDiv.appendChild(roomDiv);
+  });
+});
+
+function joinRoomFromList(roomId) {
+  const username = document.getElementById("username").value.trim();
+  if (!username) {
+    alert("Enter your username first");
+    return;
+  }
+  socket.emit("joinRoom", { roomId, username });
+}
