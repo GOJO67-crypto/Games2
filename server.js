@@ -41,3 +41,24 @@ socket.on("createRoom", ({ username, isPrivate }) => {
 });
 
 server.listen(3000, () => console.log('UNO server running on port 3000'));
+
+function getPublicRooms() {
+  return Object.entries(rooms)
+    .filter(([_, room]) => !room.isPrivate)
+    .map(([roomId, room]) => ({
+      roomId,
+      players: room.players.length
+    }));
+}
+
+io.on('connection', socket => {
+  // Existing createRoom and joinRoom logic...
+
+  socket.on('getLobbyList', () => {
+    socket.emit('lobbyList', getPublicRooms());
+  });
+
+  socket.on('disconnect', () => {
+    // Optional: remove player from rooms
+  });
+});
