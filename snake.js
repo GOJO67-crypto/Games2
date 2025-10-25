@@ -13,9 +13,10 @@ function initGame() {
   snake = [{ x: 9 * box, y: 10 * box }];
   direction = "RIGHT";
   score = 0;
+  speed = 100;
   placeFood();
   if (gameInterval) clearInterval(gameInterval);
-  gameInterval = setInterval(draw, 100);
+  gameInterval = setInterval(draw, speed);
 }
 
 function placeFood() {
@@ -33,6 +34,20 @@ document.addEventListener("keydown", e => {
 });
 
 function draw() {
+  if (head.x === food.x && head.y === food.y) {
+  score++;
+  placeFood();
+
+  if (score % 5 === 0) {
+    speed = Math.max(30, speed - 10); // decrease interval, minimum 30ms
+    clearInterval(gameInterval);
+    gameInterval = setInterval(draw, speed);
+  }
+} else {
+  snake.pop();
+}
+
+  
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   // Draw snake
@@ -80,3 +95,4 @@ function draw() {
 }
 
 window.onload = initGame;
+let speed = 100; // initial speed in ms
