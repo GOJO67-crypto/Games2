@@ -1,15 +1,37 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Subway Surfers</title>
-  <link rel="stylesheet" href="subway.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play Subway Surfers</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      font-family: sans-serif;
+    }
+    h1 {
+      margin: 20px 0;
+    }
+    iframe {
+      width: 90%;
+      max-width: 960px;
+      height: 600px;
+      border: none;
+    }
+  </style>
 </head>
 <body>
-  <h1>🚀 Subway Runner</h1>
-  <div id="gameArea">
-    <div id="player"></div>
-  </div>
-  <div id="score">Score: 0</div>
-  <script src="subway.js"></script>
+  <h1>Subway Surfers</h1>
+  <iframe 
+    src="https://subwaysurfersonline.io/play/" 
+    allowfullscreen>
+  </iframe>
 </body>
 </html>
