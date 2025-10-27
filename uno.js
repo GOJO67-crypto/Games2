@@ -59,18 +59,17 @@ function playCard(index) {
     updateDiscardPile();
     renderHand();
 
-    // Handle special effects
     if (card.number === "skip") {
       alert("You played Skip! Bot's turn is skipped.");
     } else if (card.number === "reverse") {
       alert("You played Reverse! (No effect in 2-player mode)");
     } else if (card.number === "draw10") {
+      triggerBoom();
       alert("You played Draw 10! Bot draws 10 cards.");
       for (let i = 0; i < 10; i++) drawCard(botHand);
     }
   }
 }
-
 
 function updateDiscardPile() {
   const pileDiv = document.getElementById("discard-pile");
@@ -89,3 +88,10 @@ function startGame() {
 }
 
 startGame();
+function triggerBoom() {
+  const boom = document.createElement("div");
+  boom.className = "boom-effect";
+  boom.textContent = "💥";
+  document.body.appendChild(boom);
+  setTimeout(() => boom.remove(), 1000);
+}
