@@ -1,64 +1,29 @@
-const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
+const express = require("express");
+const http = require("http");
+const { Server } = require("socket.io");
+
 const app = express();
 const server = http.createServer(app);
-const io = socketIO(server);
+const io = new Server(server);
 
-let rooms = {};
+const rooms = {};
 
-io.on('connection', socket => {
-socket.on("createRoom", ({ username, isPrivate }) => {
-  const roomId = isPrivate
-    ? "private-" + Math.random().toString(36).substr(2, 5).toUpperCase()
-    : "public-" + Math.random().toString(36).substr(2, 5);
+io.on("connection", (socket) => {
+  console.log("User connected:", socket.id);
 
-  rooms[roomId] = { players: [username], isPrivate };
-  socket.join(roomId);
-  socket.emit("roomCreated", { roomId });
-});
-
-);
+  socket.on("createRoom", (roomId) => {
+    rooms[roomId] = [socket.id];
+    socket.join(roomId);
+    io.to(socket.id).emit("roomCreated", roomId);
   });
 
-  socket.on('joinRoom', ({ roomId, username }) => {
-    if (rooms[roomId]) {
-      rooms[roomId].players.push(username);
+  socket.on("joinRoom", (roomId) => {
+    if (rooms[roomId] && rooms[roomId].length < 4) {
+      rooms[roomId].push(socket.id);
       socket.join(roomId);
-      io.to(roomId).emit('playerJoined', { username });
+      io.to(roomId).emit("playerJoined", socket.id);
     } else {
-      socket.emit('error', 'Room not found');
-    }
-  });
+      io.to(socket.id).emit("roomError", "Room full or doesn't
 
-  socket.on('playCard', ({ roomId, card, username }) => {
-    io.to(roomId).emit('cardPlayed', { card, username });
-  });
 
-  socket.on('disconnect', () => {
-    // Optional: handle player leaving
-  });
-});
 
-server.listen(3000, () => console.log('UNO server running on port 3000'));
-
-function getPublicRooms() {
-  return Object.entries(rooms)
-    .filter(([_, room]) => !room.isPrivate)
-    .map(([roomId, room]) => ({
-      roomId,
-      players: room.players.length
-    }));
-}
-
-io.on('connection', socket => {
-  // Existing createRoom and joinRoom logic...
-
-  socket.on('getLobbyList', () => {
-    socket.emit('lobbyList', getPublicRooms());
-  });
-
-  socket.on('disconnect', () => {
-    // Optional: remove player from rooms
-  });
-});
