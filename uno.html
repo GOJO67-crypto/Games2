@@ -1,48 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>UNO Lobby</title>
-  <script src="/socket.io/socket.io.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UNO Game</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>UNO Game Lobby</h1>
-  <input id="username" placeholder="Enter your name" />
-  <button onclick="createLobby(false)">Create Public Match</button>
-  <button onclick="createLobby(true)">Create Private Match</button>
-  <input id="lobbyCode" placeholder="Enter lobby code" />
-  <button onclick="joinLobby()">Join Match</button>
-
-  <div id="lobbyInfo"></div>
-
-  <script>
-    const socket = io();
-
-    function createLobby(isPrivate) {
-      const username = document.getElementById('username').value;
-      socket.emit('createLobby', { username, isPrivate });
-    }
-
-    function joinLobby() {
-      const username = document.getElementById('username').value;
-      const lobbyId = document.getElementById('lobbyCode').value;
-      socket.emit('joinLobby', { lobbyId, username });
-    }
-
-    socket.on('lobbyCreated', ({ lobbyId }) => {
-      document.getElementById('lobbyInfo').innerText = `Lobby created: ${lobbyId}`;
-    });
-
-    socket.on('playerJoined', ({ username }) => {
-      document.getElementById('lobbyInfo').innerText += `\n${username} joined`;
-    });
-
-    socket.on('error', msg => alert(msg));
-  </script>
+  <h1>UNO Game</h1>
+  <div id="game">
+    <div id="player-hand" class="hand"></div>
+    <div id="discard-pile"></div>
+    <button id="draw-button">Draw Card</button>
+  </div>
+  <script src="script.js"></script>
 </body>
 </html>
 
-<div id="chat">
-  <div id="chatMessages" style="height: 200px; overflow-y: scroll; border: 1px solid #ccc; padding: 10px;"></div>
-  <input id="chatInput" placeholder="Type a message..." />
-  <button onclick="sendMessage()">Send</button>
-</div>
+
