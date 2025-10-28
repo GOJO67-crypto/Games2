@@ -33,3 +33,24 @@ function checkCollision() {
 document.getElementById("brainrotButton").addEventListener("click", () => {
   brainrot.classList.add("moving");
 });
+function launchPlayer() {
+  const player = document.getElementById("player");
+  player.style.transition = "transform 0.5s ease";
+  player.style.transform = "translateX(800px) rotate(720deg)";
+}
+
+function deleteBrainrots() {
+  document.querySelectorAll(".brainrot").forEach(brainrot => {
+    brainrot.remove();
+  });
+}
+
+function spawnChaos() {
+  for (let i = 0; i < 10; i++) {
+    const chaos = document.createElement("div");
+    chaos.className = "brainrot";
+    chaos.style.left = Math.random() * window.innerWidth + "px";
+    chaos.style.bottom = "100px";
+    document.getElementById("gameArea").appendChild(chaos);
+  }
+}
