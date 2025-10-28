@@ -87,3 +87,22 @@ h1 {
   margin: 20px 0;
   color: #333;
 }
+#adminPanel {
+  margin: 20px;
+}
+
+#adminPanel button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#adminPanel button:hover {
+  background-color: #cc0000;
+}
+
