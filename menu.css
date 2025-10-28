@@ -76,3 +76,21 @@ button:hover {
 #brainrotButton:hover {
   background-color: #ff1493;
 }
+
+.game-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly; /* spreads cards evenly */
+  gap: 30px;
+  padding: 20px;
+}
+
+.game-card {
+  flex: 1 1 280px; /* allows cards to grow/shrink and wrap */
+  max-width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
