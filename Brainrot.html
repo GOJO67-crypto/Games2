@@ -6,6 +6,10 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div id="gameArea">
+  <div id="player"></div>
+  <div id="brainrot"></div>
+</div>
   <h1>Steal a Brainrot</h1>
   <div id="conveyor">
     <button onclick="collectBrainrot()">🧠 Grab Brainrot</button>
@@ -20,11 +24,36 @@
     <button onclick="stealBrainrot()">💥 Steal Brainrot</button>
   </div>
   <script src="game.js"></script>
+<script>
+  const player = document.getElementById("player");
+  const brainrot = document.getElementById("brainrot");
+  let posX = 280;
+  let posY = 180;
+  const step = 10;
+
+  document.addEventListener("keydown", function(e) {
+    switch (e.key) {
+      case "ArrowUp": posY = Math.max(0, posY - step); break;
+      case "ArrowDown": posY = Math.min(360, posY + step); break;
+      case "ArrowLeft": posX = Math.max(0, posX - step); break;
+      case "ArrowRight": posX = Math.min(560, posX + step); break;
+    }
+    player.style.top = posY + "px";
+    player.style.left = posX + "px";
+    checkCollision();
+  });
+
+  function checkCollision() {
+    const p = player.getBoundingClientRect();
+    const b = brainrot.getBoundingClientRect();
+    const overlap = !(p.right < b.left || p.left > b.right || p.bottom < b.top || p.top > b.bottom);
+    if (overlap) {
+      brainrot.style.display = "none";
+      alert("You stole a Brainrot!");
+    }
+  }
+</script>
+
 </body>
 </html>
-
-<div id="gameArea">
-  <div id="player"></div>
-  <div id="brainrot"></div>
-</div>
 
