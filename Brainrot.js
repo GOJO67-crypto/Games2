@@ -54,3 +54,21 @@ function spawnChaos() {
     document.getElementById("gameArea").appendChild(chaos);
   }
 }
+const player = document.getElementById("player");
+let isJumping = false;
+
+document.addEventListener("keydown", function (e) {
+  if (e.key === " " && !isJumping) {
+    jump();
+  }
+});
+
+function jump() {
+  isJumping = true;
+  player.style.bottom = "180px"; // jump height
+
+  setTimeout(() => {
+    player.style.bottom = "100px"; // fall back to ground
+    isJumping = false;
+  }, 500); // time in air
+}
