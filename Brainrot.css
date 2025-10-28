@@ -99,4 +99,25 @@ button:hover {
 #player {
   width: 40px;
   height: 40px;
-  background-color
+  background-color: #ff69b4;
+  position: absolute;
+  top: 180px;
+  left: 280px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff1493;
+}
+
+/* Brainrot Character */
+#brainrot {
+  width: 40px;
+  height: 40px;
+  background-image: url('images/brainrot-face1.png'); /* Replace with your actual image path */
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #2e7d32;
+}
+
