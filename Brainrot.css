@@ -1,52 +1,102 @@
+/* General Page Styling */
 body {
-  font-family: sans-serif;
-  text-align: center;
-  background-color: #f0f0f0;
-}
-#conveyor, #yourBase, #enemyBase {
-  margin: 20px;
-  padding: 10px;
-  border: 2px solid #333;
-  background-color: #fff;
-}
-ul {
-  list-style: none;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f0f4f8;
+  margin: 0;
   padding: 0;
+  text-align: center;
 }
-li {
-  margin: 5px;
-  padding: 5px;
-  background-color: #cfc;
-  border: 1px solid #999;
+
+/* Game Hub Container */
+#menuContainer {
+  padding: 40px 20px;
 }
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  color: #333;
+}
+
+/* Game Grid Layout */
+.game-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 30px;
+  padding: 20px;
+}
+
+.game-card {
+  flex: 1 1 280px;
+  max-width: 300px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.game-card:hover {
+  transform: scale(1.05);
+}
+
+.game-card h2 {
+  margin-top: 0;
+  font-size: 1.5em;
+  color: #4CAF50;
+}
+
+.game-card p {
+  font-size: 1em;
+  color: #555;
+}
+
+/* Buttons */
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Special Button for Brainrot Game */
+#brainrotButton {
+  padding: 12px 24px;
+  font-size: 18px;
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#brainrotButton:hover {
+  background-color: #ff1493;
+}
+
+/* Game Area */
 #gameArea {
   width: 600px;
   height: 400px;
-  border: 3px solid #333;
+  border: 2px solid #333;
   background-color: #e0f7fa;
   position: relative;
   margin: 40px auto;
   overflow: hidden;
 }
 
+/* Player Character */
 #player {
   width: 40px;
   height: 40px;
-  background-color: #ff69b4; /* pink player */
-  position: absolute;
-  top: 180px;
-  left: 280px;
-  border-radius: 50%;
-  box-shadow: 0 0 10px #ff1493;
-}
-
-#brainrot {
-  width: 30px;
-  height: 30px;
-  background-color: #4CAF50; /* green brainrot */
-  position: absolute;
-  top: 100px;
-  left: 100px;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #2e7d32;
-}
+  background-color
