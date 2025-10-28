@@ -1,72 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Game Hub</title>
-  <link rel="stylesheet" href="menu.css">
-</head>
-<body>
-  <div id="menuContainer">
-    <h1>🎮 Welcome to the Game Hub</h1>
-
-    <input type="text" id="searchInput" placeholder="Search games..." onkeyup="filterGames()" />
-
-    <div class="game-grid">
-      <div class="game-card">
-        <h2>🐍 Snake Game</h2>
-        <p>Eat apples, grow longer, and avoid crashing!</p>
-        <a href="snake.html"><button>Play Snake</button></a>
-      </div>
-
-     <div class="game-card">
-  <h2>❌ Tic Tac Toe</h2>
-  <p>Take turns and get three in a row!</p>
-  <a href="tictactoe.html"><button>Play Tic Tac Toe</button></a>
-
-
-   <div class="game-card">
-  <h2>🃏 UNO Game</h2>
-  <p>Create public or private matches and play with friends!</p>
-  <a href="lobby.html"><button>Play UNO</button></a>
-</div>
-
-<div class="game-card">
-  <h2>🚀 Subway Surfers</h2>
-  <p>Dodge obstacles and run as far as you can!</p>
-  <a href="subway.html"><button>Play Subway Surfers</button></a>
-</div>
-    <script>
-  function filterGames() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const cards = document.getElementsByClassName("game-card");
-
-    for (let i = 0; i < cards.length; i++) {
-      const card = cards[i];
-      const text = card.innerText.toLowerCase();
-      card.style.display = text.includes(input) ? "inline-block" : "none";
-    }
-  }
-</script>
-
-   <div class="game-card">
-  <h2>🧱 Minecraft</h2>
-  <p>Explore, build, and survive in a blocky world!</p>
-  <a href="eaglercraft.html"><button>Play Minecraft</button></a>
-</div>
-
-<a href="escaperoad.html">Play Escape Road City 2</a>
-
 <div id="menuContainer">
   <h1>Game Hub</h1>
   <div class="game-grid">
-    
-    <!-- Existing game cards go here -->
 
-    <!-- New Brainrot Game Card -->
     <div class="game-card">
       <h2>Steal a Brainrot</h2>
       <p>Collect and defend your brainrots in this chaotic mini-game!</p>
       <button id="brainrotButton">Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <h2>Snake</h2>
+      <p>Classic arcade fun — eat, grow, and avoid your tail!</p>
+      <button>Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <h2>Tic Tac Toe</h2>
+      <p>Challenge your friends in this timeless strategy game.</p>
+      <button>Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <h2>Uno</h2>
+      <p>Match colors and numbers — don’t forget to yell UNO!</p>
+      <button>Play Now</button>
+    </div>
+
+    <div class="game-card">
+      <h2>Subway Surfers</h2>
+      <p>Dodge trains and collect coins in this fast-paced runner!</p>
+      <button>Play Now</button>
     </div>
 
   </div>
@@ -74,7 +37,22 @@
 
 <script>
   document.getElementById("brainrotButton").addEventListener("click", function() {
-    // Replace with your actual game URL or logic
     window.location.href = "Brainrot.html";
+  });
+
+  document.getElementById("snakeButton").addEventListener("click", function() {
+    window.location.href = "snake.html";
+  });
+
+  document.getElementById("ticTacToeButton").addEventListener("click", function() {
+    window.location.href = "tic-tac-toe.html";
+  });
+
+  document.getElementById("unoButton").addEventListener("click", function() {
+    window.location.href = "uno.html";
+  });
+
+  document.getElementById("subwaySurfersButton").addEventListener("click", function() {
+    window.location.href = "subway-surfers.html";
   });
 </script>
