@@ -55,20 +55,23 @@ function spawnChaos() {
   }
 }
 const player = document.getElementById("player");
-let isJumping = false;
+let posX = 100;
+const step = 10;
 
 document.addEventListener("keydown", function (e) {
-  if (e.key === " " && !isJumping) {
-    jump();
-  }
+  if (e.key === "ArrowRight") posX += step;
+  if (e.key === "ArrowLeft") posX -= step;
+  player.style.left = posX + "px";
+
+  if (e.key === " " && !isJumping) jump();
 });
 
+let isJumping = false;
 function jump() {
   isJumping = true;
-  player.style.bottom = "180px"; // jump height
-
+  player.style.bottom = "180px";
   setTimeout(() => {
-    player.style.bottom = "100px"; // fall back to ground
+    player.style.bottom = "100px";
     isJumping = false;
-  }, 500); // time in air
+  }, 500);
 }
